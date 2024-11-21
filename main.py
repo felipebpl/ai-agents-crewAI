@@ -1,90 +1,63 @@
 import logging
-from agents.fetcher import FetcherAgent
-from agents.filter import FilterAgent
-from agents.summarizer import SummarizerAgent
-from crewai import Task, Crew
+from agents.content_fetcher import ContentFetcher
+from agents.content_filter import ContentFilter
+from agents.summarizer import Summarizer
+from agents.notifier import Notifier
+from utils.config import Config
+
+
+def setup_logging():
+    logging.basicConfig(
+        level=logging.INFO,
+        format="%(asctime)s - %(name)s - [%(levelname)s] - %(message)s",
+        datefmt="%Y-%m-%d %H:%M:%S"
+    )
+
+
+def main():
+    setup_logging()
+    logger = logging.getLogger(__name__)
+
+    if not Config.SOURCE_URLS:
+        logger.error("No source URLs provided in the configuration.")
+        return
+
+    logger.info("Initializing agents...")
+    content_fetcher = ContentFetcher(
+        source_urls=Config.SOURCE_URLS,
+        firecrawl_api_key=Config.FIRECRAWL_API_KEY
+    )
+    content_filter = ContentFilter(
+        user_interests=Config.USER_INTERESTS
+    )
+    summarizer = Summarizer()
+    notifier = Notifier(
+        session_name='news_notifier',
+        user_phone_number='+5519982789161'
+    )
+
+    logger.info("Fetching articles using Firecrawl...")
+    contents = content_fetcher.start_extraction()
+    logger.info(f"Fetched {len(contents)} articles.")
+
+    logger.info("Filtering articles for relevance...")
+    relevant_articles = content_filter.filter_articles(contents)
+    logger.info(f"Found {len(relevant_articles)} relevant articles.")
+
+    if not relevant_articles:
+        logger.info("No relevant articles found.")
+        return
+
+    logger.info("Summarizing articles...")
+    summaries = summarizer.summarize_articles(relevant_articles)
+    logger.info("Summaries generated.")
+
+    logger.info("Sending notifications via WhatsApp...")
+    notifier.send_notifications(summaries)
+    logger.info("Notifications sent successfully.")
+
+    print(summaries)
+
 
 if __name__ == "__main__":
-    logging.basicConfig(level=logging.INFO, format='%(asctime)s - %(levelname)s - %(message)s')
-    
-    # Define sources and preferences
-    sources = ["https://news.ycombinator.com/", "https://www.paulgraham.com/articles.html"]
-    keywords = ["AI", "machine learning", "venture capital"]
-    prompt = """
-    You are a specialized assistant for a busy founder. Extract and summarize the most relevant points.
-    """
-
-    # Goal and backstory for agents
-    fetcher_goal = "Collect newsletter content for summarization."
-    fetcher_backstory = "This agent is designed to efficiently scrape newsletters and deliver raw content for analysis."
-    
-    logging.info("Starting run method.")
-
-    # Initialize CrewAI agents
-    fetcher_agent = FetcherAgent(
-        name="Newsletter Fetcher",
-        role="Fetcher",
-        goal="Collect newsletter content for summarization.",
-        backstory="This agent is designed to efficiently scrape newsletters and deliver raw content for analysis.",
-        sources=["https://news.ycombinator.com/", "https://www.paulgraham.com/articles.html"]
-    )
-
-
-    filter_agent = FilterAgent(
-        name="Content Filter",
-        role="Filter",
-        goal="Filter relevant content from collected articles.",
-        backstory="You are a highly skilled filter designed to sift through content and find the most relevant pieces.",
-        keywords=["AI", "machine learning", "venture capital"]
-    )
-
-
-    summarizer_agent = SummarizerAgent(
-        name="Content Summarizer",
-        role="Summarizer",
-        goal="Summarize filtered content.",
-        backstory="You are an expert in extracting and summarizing key insights from given content."
-    )
-
-
-    # Define tasks
-    fetch_task = Task(
-        agent=fetcher_agent,
-        description="Fetch content from newsletters.",
-        expected_output="A list of articles fetched from the sources with raw content."
-    )
-
-    logging.info("Fetch Task Result:")
-    logging.info(fetch_task.output)
-
-    filter_task = Task(
-        agent=filter_agent,
-        description="Filter relevant content.",
-        expected_output="A list of articles containing keywords relevant to the user's preferences.",
-        dependencies=[fetch_task]
-    )
-
-    logging.info("Filter Task output:")
-    logging.info(filter_task.output)
-    
-    # Define summarize_task
-    summarize_task = Task(
-        agent=summarizer_agent,
-        description="Summarize filtered content.",
-        expected_output="Summarized content from the filtered articles.",
-        dependencies=[filter_task]
-    )
-
-    logging.info("Summarize Task output:")
-    logging.info(summarize_task.output)
-
-    # Execute Crew
-    crew = Crew(tasks=[fetch_task, filter_task, summarize_task])
-    outputs = crew.kickoff()
-
-    logging.info("Finished run method. Returning result.")
-
-    # Log dos resultados finais
-    logging.info("Final Results of Crew Execution:")
-    logging.info(outputs)
-
+    main()

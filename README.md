@@ -14,11 +14,16 @@ This project addresses a critical gap: leveraging the constant flow of new conte
 
 ## The Solution  
 
-This project introduces a **multi-agent system** designed to act as a learning companion, curating and delivering content that supports continuous, personalized education. Using **Crew AI**, we build a system that:  
+This project introduces a **multi-agent system** designed to act as a learning companion, curating and delivering content that supports continuous, personalized education. Using **Langchain, FireCrwaler open source, openAI API**, we build a system that:  
 
-1. **Aggregates Content**: Dynamically retrieves articles, memos, and updates from diverse, high-quality sources like Hacker News and professional newsletters.  
+1. **Query Content**: Dynamically retrieves articles, memos, and updates from diverse, high-quality sources like Hacker News and professional newsletters. 
+
 2. **Filters for Relevance**: Identifies the most pertinent content aligned with user-defined learning goals and interests.  
-3. **Summarizes for Precision**: Provides concise overviews, enabling users to quickly assess the value of each piece while linking to the original material for deeper exploration.  
+
+3. **Summarizes for Precision**: Assemble the final output, providing concise overviews from the filters, enabling users to quickly assess the value of each piece while linking to the original material for deeper exploration.  
+
+4. **Notifier Agent**:  sends the summaries to the user via WhatsApp for seamless accessibility.
+
 
 ## How It Works  
 
@@ -28,7 +33,6 @@ The system leverages the synergy of **AI agents** and **Large Language Models (L
 - **Filter Agent**: Evaluates and prioritizes content based on relevance to user preferences and learning goals.  
 - **Summarizer Agent**: Distills selected content into concise summaries, retaining key insights for quick and effective understanding.  
 - **Notifier Agent**: Logs curated content and sends summaries to the user via WhatsApp for seamless accessibility.  
-
 
 ## Impact on Lifelong Learning  
 
@@ -56,3 +60,17 @@ This project emphasizes the transformative power of AI in shaping learning habit
 
 ### Repository  
 [ai-agents-crewAI](https://github.com/felipebpl/ai-agents-crewAI)  
+
+## Structure of the project
+ai_learning_companion/
+├── agents/
+│   ├── __init__.py
+│   ├── content_fetcher.py
+│   ├── content_filter.py
+│   ├── summarizer.py
+│   └── notifier.py
+├── utils/
+│   ├── __init__.py
+│   └── config.py
+├── main.py
+├── requirements.txt
