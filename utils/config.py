@@ -1,5 +1,3 @@
-# utils/config.py
-
 import os
 import json
 from dotenv import load_dotenv
@@ -25,9 +23,6 @@ def parse_source_urls(env_var: str) -> List[str]:
 
 class Config:
     OPENAI_API_KEY: str = os.getenv("OPENAI_API_KEY")
-    WHATSAPP_API_URL: str = os.getenv("WHATSAPP_API_URL")
-    WHATSAPP_API_TOKEN: str = os.getenv("WHATSAPP_API_TOKEN")
-    USER_PHONE_NUMBER: str = os.getenv("USER_PHONE_NUMBER")
     USER_INTERESTS: str = os.getenv(
         "USER_INTERESTS", "Artificial Intelligence, Machine Learning"
     )

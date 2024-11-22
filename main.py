@@ -36,6 +36,7 @@ def main():
         user_phone_number='+5519982789161'
     )
 
+    print("Initializing agents...")
     logger.info("Fetching articles using Firecrawl...")
     contents = content_fetcher.start_extraction()
     logger.info(f"Fetched {len(contents)} articles.")
@@ -55,9 +56,6 @@ def main():
     logger.info("Sending notifications via WhatsApp...")
     notifier.send_notifications(summaries)
     logger.info("Notifications sent successfully.")
-
-    print(summaries)
-
 
 if __name__ == "__main__":
     main()

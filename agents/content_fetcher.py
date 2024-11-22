@@ -65,13 +65,13 @@ class ContentFetcher:
                 "extractorOptions": {
                     "mode": "llm-extraction",
                     "extractionPrompt": f"""
-                        Based on the information on the page, extract the information from the schema.
+                        Based on the information on the page at the {url}, extract the information from the schema.
                         The schema should include a list of articles with their titles, URLs, and published dates.
 
                         Today's date is: {datetime.today().strftime("%Y-%m-%d")}. 
                         Always extract the published_at field in the format: "%Y-%m-%d" (e.g. "2024-11-21"). 
                         
-                        Always extract only the top newest articles. 
+                        Always extract only the top newest articles and there entire urls.
                     """,
                     "extractionSchema": {
                         "type": "object",
@@ -100,7 +100,7 @@ class ContentFetcher:
                 llm_extract = extract.get("llm_extraction", {})
                 article = {
                     "title": metadata.get("title", ""),
-                    "url": metadata.get("ogUrl", ""),
+                    "url": metadata.get("url", ""),
                     "markdown": extract.get("markdown", ""),
                     "articles": llm_extract.get("articles", [])
                 }
@@ -141,7 +141,7 @@ class ContentFetcher:
         for article in articles:
             if article["published_at"]:
                 published_at = datetime.strptime(article["published_at"], "%Y-%m-%d")
-                if (today - published_at).days < 1:
+                if (today - published_at).days <= 1:
                     relevant_content.append(article)
         return relevant_content
 

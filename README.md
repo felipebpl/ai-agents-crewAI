@@ -72,5 +72,34 @@ ai_learning_companion/
 ├── utils/
 │   ├── __init__.py
 │   └── config.py
+│   └── openai_client.py
+│   └── markdown_cleaner.py
 ├── main.py
 ├── requirements.txt
+
+## How to run
+
+1. **Create a Virtual Environment**:
+    ```bash
+    python3 -m venv venv
+    ```
+
+2. **Activate the Virtual Environment**:
+    - On macOS and Linux:
+        ```bash
+        source venv/bin/activate
+        ```
+    - On Windows:
+        ```bash
+        .\venv\Scripts\activate
+        ```
+
+3. **Install the Requirements**:
+    ```bash
+    pip install -r requirements.txt
+    ```
+
+4. **Run the Main Script**:
+    ```bash
+    python main.py
+    ```
