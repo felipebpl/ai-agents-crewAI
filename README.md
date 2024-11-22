@@ -14,7 +14,7 @@ This project addresses a critical gap: leveraging the constant flow of new conte
 
 ## The Solution  
 
-This project introduces a **multi-agent system** designed to act as a learning companion, curating and delivering content that supports continuous, personalized education. Using **Langchain, FireCrwaler open source, openAI API**, we build a system that:  
+This project introduces a **multi-agent system** designed to act as a learning companion, curating and delivering content that supports continuous, personalized education. Using **FireCrwal, openAI API, Wpp-Whatsapp**, we build a system that:  
 
 1. **Query Content**: Dynamically retrieves articles, memos, and updates from diverse, high-quality sources like Hacker News and professional newsletters. 
 
@@ -22,7 +22,7 @@ This project introduces a **multi-agent system** designed to act as a learning c
 
 3. **Summarizes for Precision**: Assemble the final output, providing concise overviews from the filters, enabling users to quickly assess the value of each piece while linking to the original material for deeper exploration.  
 
-4. **Notifier Agent**:  sends the summaries to the user via WhatsApp for seamless accessibility.
+4. **Notify for Accessibility**: Sends the summaries to the user via WhatsApp for seamless accessibility.
 
 
 ## How It Works  
@@ -32,7 +32,7 @@ The system leverages the synergy of **AI agents** and **Large Language Models (L
 - **Fetcher Agent**: Collects content from predefined sources, ensuring a consistent and diverse stream of information.  
 - **Filter Agent**: Evaluates and prioritizes content based on relevance to user preferences and learning goals.  
 - **Summarizer Agent**: Distills selected content into concise summaries, retaining key insights for quick and effective understanding.  
-- **Notifier Agent**: Logs curated content and sends summaries to the user via WhatsApp for seamless accessibility.  
+- **Notifier**: Logs curated content and sends summaries to the user via WhatsApp for seamless accessibility.  
 
 ## Impact on Lifelong Learning  
 
@@ -99,7 +99,17 @@ ai_learning_companion/
     pip install -r requirements.txt
     ```
 
-4. **Run the Main Script**:
+4. **Set Up Environment Variables**:
+    - Copy the `.env.example` file to `.env`:
+        ```bash
+        cp .env.example .env
+        ```
+    - Open the `.env` file and set the necessary environment variables as described in the file.
+
+5. **Run the Main Script**:
     ```bash
     python main.py
     ```
+
+---
+

@@ -33,7 +33,7 @@ def main():
     summarizer = Summarizer()
     notifier = Notifier(
         session_name='news_notifier',
-        user_phone_number='+5519982789161'
+        user_phone_number=Config.USER_PHONE_NUMBER
     )
 
     print("Initializing agents...")

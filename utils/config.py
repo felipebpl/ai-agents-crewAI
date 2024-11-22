@@ -28,3 +28,4 @@ class Config:
     )
     FIRECRAWL_API_KEY: str = os.getenv("FIRECRAWL_API_KEY")
     SOURCE_URLS: List[str] = parse_source_urls(os.getenv("SOURCE_URLS", ""))
+    USER_PHONE_NUMBER: str = os.getenv("USER_PHONE_NUMBER", "+5519982789161")
