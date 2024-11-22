@@ -141,7 +141,7 @@ class ContentFetcher:
         for article in articles:
             if article["published_at"]:
                 published_at = datetime.strptime(article["published_at"], "%Y-%m-%d")
-                if (today - published_at).days <= 1:
+                if (today - published_at).days <= 5:
                     relevant_content.append(article)
         return relevant_content
 

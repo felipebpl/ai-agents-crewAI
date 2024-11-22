@@ -1,5 +1,7 @@
 # Final Project: AI Agents for Lifelong Learning  
 
+The report is the **Final NLP Project Report** available as a [PDF](./Final_NLP_Project_Report.pdf), and the pitch video can be viewed [here](https://youtu.be/KtH069jufJk).
+
 ## The Problem  
 
 Lifelong learning depends not just on access to information, but on consistent exposure to **relevant, up-to-date content** that aligns with individual interests and contributes meaningfully to personal and professional growth.  
